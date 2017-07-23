@@ -33,6 +33,5 @@ getIP()
 	);
 })
 .catch((err) => {
-	console.log("AN ERROR WAS THROWN");
 	console.log(chalk.red(err));
 });
