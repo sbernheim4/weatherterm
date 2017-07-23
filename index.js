@@ -4,6 +4,8 @@ const getIP = require('external-ip')();
 const geoip = require('geoip-lite');
 const request = require('request');
 const chalk = require('chalk');
+const promise = require("bluebird");
+
 
 const apikey = '64ead4818be5e06a1768c92eac673e33';
 
@@ -20,14 +22,11 @@ getIP((err, ip) => {
 		let info = JSON.parse(body);
 
 		console.log(
-			chalk.bgBlue(`Weather in ${geo.region} => `) +
-			chalk.bgGreen(` ${info.main.temp}°F > `) +
-			chalk.bgRed(` Humidity: ${info.main.humidity}% > `) +
-			chalk.bgWhite.black(` Wind: ${info.wind.speed} mph `)
+			chalk.bgBlue(` Weather in ${geo.region} => `) +
+			chalk.bgGreen(` ${Math.floor(info.main.temp)}°F > `) +
+			chalk.bgKeyword('orange')(chalk.black(` Wind: ${info.wind.speed} mph > `)) +
+			chalk.bgRed(` Humidity: ${info.main.humidity}% `)
 		);
 
 	});
 });
-
-
-
