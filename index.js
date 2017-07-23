@@ -10,11 +10,15 @@ getIP((err, ip) => {
     if (err) throw err;
 
 	const geo = geoip.lookup(ip);
+	console.log(geo.zip);
 
-	request.get(`http://api.openweathermap.org/data/2.5/weather?q=London&APPID=${apikey}`, (err, res, body) => {
+	const queryString = `http://api.openweathermap.org/data/2.5/weather?zip=${geo.zip},${geo.country.toLowerCase()}&APPID=${apikey}`;
+
+	request.get(queryString, (err, res, body) => {
 		if (err) throw err;
-		console.log('body is', JSON.parse(body));
-	})
+
+		console.log(JSON.parse(body));
+	});
 });
 
 
