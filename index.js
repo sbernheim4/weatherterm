@@ -12,17 +12,18 @@ let location;
 
 getIP()
 .then( ip => {
-	const geo = geoip.lookup(ip);
+	const geo = geoip.lookup(ip); // get the user's external ip address
 	location = geo.region;
-	return `http://api.openweathermap.org/data/2.5/weather?zip=${geo.zip},${geo.country.toLowerCase()}&units=imperial&APPID=${apikey}`;
+	return `http://api.openweathermap.org/data/2.5/weather?zip=${geo.zip},${geo.country.toLowerCase()}&units=imperial&APPID=${apikey}`; // generate the query string for the api
 })
 .then((res) => {
-	return request(res);
+	return request(res); // make the api call using request
 })
 .then(function(res) {
-	let info = JSON.parse(res.body);
+	let info = JSON.parse(res.body); // parse the response and convert it to JSON
 
-	// Can use `info.name` or `location` for showing the console log statements
+	// Can use `info.name` or `location` for showing the user's location in the console log statements
+	// Log the information in a pretty format
 	console.log(
 		chalk.bgBlue(` Weather in ${info.name} => `) +
 		chalk.bgGreen(` ${Math.floor(info.main.temp)}°F > `) +
