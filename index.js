@@ -11,14 +11,21 @@ getIP((err, ip) => {
     if (err) throw err;
 
 	const geo = geoip.lookup(ip);
-	console.log(geo);
 
-	const queryString = `http://api.openweathermap.org/data/2.5/weather?zip=${geo.zip},${geo.country.toLowerCase()}&APPID=${apikey}`;
+	const queryString = `http://api.openweathermap.org/data/2.5/weather?zip=${geo.zip},${geo.country.toLowerCase()}&units=imperial&APPID=${apikey}`;
 
 	request.get(queryString, (err, res, body) => {
 		if (err) throw err;
 
-		console.log(JSON.parse(body));
+		let info = JSON.parse(body);
+
+		console.log(
+			chalk.bgBlue(`Weather in ${geo.region} => `) +
+			chalk.bgGreen(` ${info.main.temp}°F > `) +
+			chalk.bgRed(` Humidity: ${info.main.humidity}% > `) +
+			chalk.bgWhite.black(` Wind: ${info.wind.speed} mph `)
+		);
+
 	});
 });
 
