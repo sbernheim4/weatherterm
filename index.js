@@ -2,8 +2,6 @@
 
 'use strict';
 
-require('dotenv').config();
-
 const chalk = require('chalk');
 const geoip = require('geoip-lite');
 
@@ -11,13 +9,15 @@ const Promise = require("bluebird");
 const getIP = Promise.promisify(require('external-ip')());
 const request = Promise.promisify(require("request"));
 
+const apiKey = `64ead4818be5e06a1768c92eac673e33`;
+
 let location;
 
 getIP()
 .then( ip => {
 	const geo = geoip.lookup(ip); // get the user's external ip address
 	location = geo.region;
-	return `http://api.openweathermap.org/data/2.5/weather?zip=${geo.zip},${geo.country.toLowerCase()}&units=imperial&APPID=${process.env.OWM_API_KEY}`; // generate the query string for the api
+	return `http://api.openweathermap.org/data/2.5/weather?zip=${geo.zip},${geo.country.toLowerCase()}&units=imperial&APPID=${apiKey}`; // generate the query string for the api
 })
 .then((res) => {
 	return request(res); // make the api call using request
@@ -25,13 +25,18 @@ getIP()
 .then(function(res) {
 	let info = JSON.parse(res.body); // parse the response and convert it to JSON
 
+	let name = info.name;
+	let temp = info.main.temp;
+	let wind = info.wind.speed;
+	let humidity = info.main.humidity;
+
 	// Can use `info.name` or `location` for showing the user's location in the console log statements
 	// Log the information in a pretty format
 	console.log(
-		chalk.bgBlue(` Weather in ${info.name} => `) +
-		chalk.bgGreen(` ${Math.floor(info.main.temp)}°F > `) +
-		chalk.bgKeyword('orange')(chalk.black(` Wind: ${info.wind.speed} mph > `)) +
-		chalk.bgRed(` Humidity: ${info.main.humidity}% `)
+		chalk.bgBlue(` Weather in ${name} => `) +
+		chalk.bgGreen(` ${Math.floor(temp)}°F > `) +
+		chalk.bgKeyword('orange')(chalk.black(` Wind: ${wind} mph > `)) +
+		chalk.bgRed(` Humidity: ${humidity}% `)
 	);
 })
 .catch((err) => {
