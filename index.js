@@ -1,5 +1,7 @@
 'use strict';
 
+require('dotenv').config()
+
 const chalk = require('chalk');
 const geoip = require('geoip-lite');
 
@@ -7,14 +9,13 @@ const Promise = require("bluebird");
 const getIP = Promise.promisify(require('external-ip')());
 const request = Promise.promisify(require("request"));
 
-const apikey = '64ead4818be5e06a1768c92eac673e33';
 let location;
 
 getIP()
 .then( ip => {
 	const geo = geoip.lookup(ip); // get the user's external ip address
 	location = geo.region;
-	return `http://api.openweathermap.org/data/2.5/weather?zip=${geo.zip},${geo.country.toLowerCase()}&units=imperial&APPID=${apikey}`; // generate the query string for the api
+	return `http://api.openweathermap.org/data/2.5/weather?zip=${geo.zip},${geo.country.toLowerCase()}&units=imperial&APPID=${process.env.OWM_API_KEY}`; // generate the query string for the api
 })
 .then((res) => {
 	return request(res); // make the api call using request
