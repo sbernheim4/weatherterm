@@ -1,12 +1,11 @@
 'use strict';
 
-const Promise = require("bluebird");
-
-const getIP = Promise.promisify(require('external-ip')());
-const geoip = require('geoip-lite');
-const request = Promise.promisify(require("request"));
-
 const chalk = require('chalk');
+const geoip = require('geoip-lite');
+
+const Promise = require("bluebird");
+const getIP = Promise.promisify(require('external-ip')());
+const request = Promise.promisify(require("request"));
 
 const apikey = '64ead4818be5e06a1768c92eac673e33';
 
@@ -18,7 +17,7 @@ getIP()
 .then((res) => {
 	return request(res);
 })
-.then(function(res)  {
+.then(function(res) {
 	let info = JSON.parse(res.body);
 
 	console.log(
