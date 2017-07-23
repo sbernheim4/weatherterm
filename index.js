@@ -1,6 +1,7 @@
+#!/usr/bin/env node
 'use strict';
 
-require('dotenv').config()
+require('dotenv').config();
 
 const chalk = require('chalk');
 const geoip = require('geoip-lite');

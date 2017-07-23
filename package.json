@@ -19,6 +19,9 @@
   ],
   "author": "Samuel Bernheim",
   "license": "MIT",
+  "bin": {
+    "weather": "./index.js"
+  },
   "bugs": {
     "url": "https://github.com/sbernheim4/weatherterm/issues"
   },
