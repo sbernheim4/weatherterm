@@ -34,13 +34,21 @@ getIP()
 
 	// Can use `info.name` or `location` for showing the user's location in the console log statements
 	// Log the information in a pretty format
+
 	console.log(
 		chalk.bgBlue(` Weather in ${name} => `) +
+		chalk.bgGreen.blue('') +
 		chalk.bgGreen(` ${Math.floor(temp)}°F > `) +
+		chalk.bgKeyword('orange').green('') +
 		chalk.bgKeyword('orange')(chalk.black(` Wind: ${wind} mph > `)) +
+		chalk.bgRed.keyword('orange')('') +
 		chalk.bgRed(` Humidity: ${humidity}% `) +
-		chalk.bgWhite.black(` Condition is: ${conditions} `)
+		chalk.bgWhite.red('') +
+		chalk.bgWhite.black(` Condition is: ${conditions} `) +
+		chalk.white(``) +
+		chalk.black('')
 	);
+
 })
 .catch((err) => {
 	console.log(chalk.red(err));
