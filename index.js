@@ -36,11 +36,11 @@ getIP()
 	// Log the information in a pretty format
 
 	console.log(
-		chalk.bgBlue(` Weather in ${name} => `) +
+		chalk.bgBlue(` Weather in ${name}`) +
 		chalk.bgGreen.blue('') +
-		chalk.bgGreen(` ${Math.floor(temp)}°F > `) +
+		chalk.bgGreen(` ${Math.floor(temp)}°F `) +
 		chalk.bgKeyword('orange').green('') +
-		chalk.bgKeyword('orange')(chalk.black(` Wind: ${wind} mph > `)) +
+		chalk.bgKeyword('orange')(chalk.black(` Wind: ${wind} mph `)) +
 		chalk.bgRed.keyword('orange')('') +
 		chalk.bgRed(` Humidity: ${humidity}% `) +
 		chalk.bgWhite.red('') +
