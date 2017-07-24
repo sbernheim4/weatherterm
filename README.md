@@ -15,3 +15,5 @@ Right now I use the Open Weather Map API to get the information. They provide pn
 # Contributions
 
 Feel free to send PRs or make issues in the repo. Enjoy
+
+![alt Image showing example use of weather tool](https://raw.githubusercontent.com/sbernheim4/weatherterm/master/images/Example.png)
