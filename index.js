@@ -29,6 +29,8 @@ getIP()
 	let temp = info.main.temp;
 	let wind = info.wind.speed;
 	let humidity = info.main.humidity;
+	let conditions = info.weather[0].main
+	let icon = info.weather[0].icon;
 
 	// Can use `info.name` or `location` for showing the user's location in the console log statements
 	// Log the information in a pretty format
@@ -36,7 +38,8 @@ getIP()
 		chalk.bgBlue(` Weather in ${name} => `) +
 		chalk.bgGreen(` ${Math.floor(temp)}°F > `) +
 		chalk.bgKeyword('orange')(chalk.black(` Wind: ${wind} mph > `)) +
-		chalk.bgRed(` Humidity: ${humidity}% `)
+		chalk.bgRed(` Humidity: ${humidity}% `) +
+		chalk.bgWhite.black(` Condition is: ${conditions} `)
 	);
 })
 .catch((err) => {
