@@ -1,3 +1,5 @@
+[![NPM](https://nodei.co/npm/weatherterm.png)](https://nodei.co/npm/weatherterm/)
+
 # About
 
 Weatherterm is a simple cli client to get the weather for your location. Once installed all you have to do is enter `weather` in your terminal to get the information printed nicely in you terminal. You get the current temperature, humidity and wind speed.
@@ -14,7 +16,7 @@ Right now I use the Open Weather Map API to get the information. They provide pn
 
 If the arrow characters are not displayed correctly in your terminal you may need to switch the font you are using. A setup I know works is to use iTerm2 with a font from https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts
 
-I personally use DroidSansMono font. Just download and install which ever font you want though and set it as the default font for your terminal and you should be good to go. If you have any problems with it just post an issue. 
+I personally use DroidSansMono font. Just download and install which ever font you want though and set it as the default font for your terminal and you should be good to go. If you have any problems with it just post an issue.
 
 # Contributions
 
