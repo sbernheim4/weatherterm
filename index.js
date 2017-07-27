@@ -11,18 +11,12 @@ const request = Promise.promisify(require("request"));
 
 const apiKey = `64ead4818be5e06a1768c92eac673e33`;
 
-let location;
-
-getIP()
-.then( ip => {
+getIP().then( ip => {
 	const geo = geoip.lookup(ip); // get the user's external ip address
-	location = geo.region;
-	return `http://api.openweathermap.org/data/2.5/weather?zip=${geo.zip},${geo.country.toLowerCase()}&units=imperial&APPID=${apiKey}`; // generate the query string for the api
-})
-.then((res) => {
+	return generateQuery(geo);
+}).then( res => {
 	return request(res); // make the api call using request
-})
-.then(function(res) {
+}).then( res => {
 	let info = JSON.parse(res.body); // parse the response and convert it to JSON
 
 	let name = info.name;
@@ -37,19 +31,33 @@ getIP()
 
 	console.log(
 		chalk.bgBlue(` Weather in ${name} `) +
-		chalk.bgGreen.blue('') +
-		chalk.bgGreen(` ${Math.floor(temp)}°F `) +
-		chalk.bgKeyword('orange').green('') +
-		chalk.bgKeyword('orange')(chalk.black(` Wind: ${wind} mph `)) +
-		chalk.bgRed.keyword('orange')('') +
-		chalk.bgRed(` Humidity: ${humidity}% `) +
-		chalk.bgWhite.red('') +
-		chalk.bgWhite.black(` Condition is: ${conditions} `) +
-		chalk.white(``) +
-		chalk.black('')
+			chalk.bgGreen.blue('') +
+			chalk.bgGreen(` ${Math.floor(temp)}°F `) +
+			chalk.bgKeyword('orange').green('') +
+			chalk.bgKeyword('orange')(chalk.black(` Wind: ${wind} mph `)) +
+			chalk.bgRed.keyword('orange')('') +
+			chalk.bgRed(` Humidity: ${humidity}% `) +
+			chalk.bgWhite.red('') +
+			chalk.bgWhite.black(` Condition is: ${conditions} `) +
+			chalk.white(``) +
+			chalk.black('')
 	);
 
-})
-.catch((err) => {
+}).catch( err => {
 	console.log(chalk.red(err));
 });
+
+function generateQuery(geo) {
+	const arg = process.argv.slice(2)[0];
+	const zipRegex = new RegExp(/(^\d{5}$)|(^\d{5}-\d{4}$)/);
+	// If the user passed in an arg, try and parse it
+	if (!!arg) {
+		if (zipRegex.test(arg)) {
+			return `http://api.openweathermap.org/data/2.5/weather?zip=${arg},${geo.country.toLowerCase()}&units=imperial&APPID=${apiKey}`; // generate the query string for the api
+		} else {
+			console.log(`Parameter '${arg}' not understood, falling back to your location`)
+		}
+	}
+	// Fallback to using zipcode from geo
+	return `http://api.openweathermap.org/data/2.5/weather?zip=${geo.zip},${geo.country.toLowerCase()}&units=imperial&APPID=${apiKey}`; // generate the query string for the api
+}
