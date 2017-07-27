@@ -2,13 +2,27 @@
 
 # About
 
-Weatherterm is a simple cli client to get the weather for your location. Once installed all you have to do is enter `weather` in your terminal to get the information printed nicely in you terminal. You get the current temperature, humidity and wind speed.
+Weatherterm is a simple cli client to get the weather for your location. Once installed all you have to do is enter `weather` in your terminal and the information will be printed.
 
 # Installation
 
 `npm i -g weatherterm`
 
-NOTE: Make sure you have npm/node installed on your machine.
+# Features
+
+1. Display the following for your current location
+- Temperature
+- Wind Speed
+- Humidity 
+- Condition (Raining, Cloudy, etc)
+
+2. The above fields for a specified zip code. To specify a zip code just enter `weather <ZIP CODE>` (Note: You must be in the same country that the zip code specifies or the lookup will fail). For Example:
+
+`weather 10108`
+
+
+
+More to come!! If you have a specific feature request just let me know in the issues page
 
 # Future Development/Notes
 
