@@ -24,7 +24,7 @@ getIP().then( ip => {
 	let wind = info.wind.speed;
 	let humidity = info.main.humidity;
 	let conditions = info.weather[0].main
-	let icon = info.weather[0].icon;
+	/*let icon = info.weather[0].icon;*/
 
 	// Can use `info.name` or `location` for showing the user's location in the console log statements
 	// Log the information in a pretty format

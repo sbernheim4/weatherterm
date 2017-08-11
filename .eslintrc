@@ -5,7 +5,8 @@
 
 	"globals": {
 		"require": true,
-		"console": true
+		"console": true,
+		"process": true
 	},
 
 	"rules": {
