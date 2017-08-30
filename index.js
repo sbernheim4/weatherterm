@@ -50,14 +50,23 @@ getIP().then( ip => {
 function generateQuery(geo) {
 	const arg = process.argv.slice(2)[0];
 	const zipRegex = new RegExp(/(^\d{5}$)|(^\d{5}-\d{4}$)/);
-	// If the user passed in an arg, try and parse it
-	if (!!arg) {
-		if (zipRegex.test(arg)) {
-			return `http://api.openweathermap.org/data/2.5/weather?zip=${arg},${geo.country.toLowerCase()}&units=imperial&APPID=${apiKey}`; // generate the query string for the api
-		} else {
-			console.log(`Parameter '${arg}' not understood, falling back to your location`)
-		}
+	// If the user passed in an arg, try and parse it with the above regex
+
+	// Error checks first
+	if (!!!arg && !zipRegex.test(arg)) {
+		// if no zip-code was given as an argument, and the zip code from geoip-lite fails the regexp test
+		// throw an error
+		throw Error('ERROR: IP Address lookup failed');
+	} else if (!!arg && !zipRegex.test(arg)) {
+		// if a zip code was given and it fails the regexp test then throw an error
+		throw Error(`ERROR: ${arg} is an invalid zip code`);
 	}
-	// Fallback to using zipcode from geo
-	return `http://api.openweathermap.org/data/2.5/weather?zip=${geo.zip},${geo.country.toLowerCase()}&units=imperial&APPID=${apiKey}`; // generate the query string for the api
+
+	if (!!arg) {
+		// if the user entered a Zip Code, use it
+		return `http://api.openweathermap.org/data/2.5/weather?zip=${arg},${geo.country.toLowerCase()}&units=imperial&APPID=${apiKey}`; // generate the query string for the api
+	} else {
+		// if no Zip Code was provided, use the geoip lookup
+		return `http://api.openweathermap.org/data/2.5/weather?zip=${geo.zip},${geo.country.toLowerCase()}&units=imperial&APPID=${apiKey}`; // generate the query string for the api
+	}
 }
