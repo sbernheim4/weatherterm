@@ -50,14 +50,32 @@ getIP().then( ip => {
 function generateQuery(geo) {
 	const arg = process.argv.slice(2)[0];
 	const zipRegex = new RegExp(/(^\d{5}$)|(^\d{5}-\d{4}$)/);
+
 	// If the user passed in an arg, try and parse it
 	if (!!arg) {
 		if (zipRegex.test(arg)) {
 			return `http://api.openweathermap.org/data/2.5/weather?zip=${arg},${geo.country.toLowerCase()}&units=imperial&APPID=${apiKey}`; // generate the query string for the api
 		} else {
-			console.log(`Parameter '${arg}' not understood, falling back to your location`)
+			console.log(`Parameter '${arg}' not understood, falling back to your location`);
 		}
 	}
+
+	let zip = normalizeZipCode(geo.zip);
+
 	// Fallback to using zipcode from geo
-	return `http://api.openweathermap.org/data/2.5/weather?zip=${geo.zip},${geo.country.toLowerCase()}&units=imperial&APPID=${apiKey}`; // generate the query string for the api
+	if (zipRegex.test(zip)) {
+		return `http://api.openweathermap.org/data/2.5/weather?zip=${zip},${geo.country.toLowerCase()}&units=imperial&APPID=${apiKey}`; // generate the query string for the api
+	}
+}
+
+function normalizeZipCode(zipcode) {
+	let normalized = zipcode.toString();
+	let length = normalized.length;
+	let extraPadding = 5 - length;
+
+	for (let i = 0; i < extraPadding; i++) {
+		normalized = `0` + zipcode;
+	}
+
+	return normalized;
 }
