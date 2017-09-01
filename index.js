@@ -17,14 +17,14 @@ getIP().then( ip => {
 }).then( res => {
 	return request(res); // make the api call using request
 }).then( res => {
-	let info = JSON.parse(res.body); // parse the response and convert it to JSON
+	const info = JSON.parse(res.body); // parse the response and convert it to JSON
 
-	let name = info.name;
-	let temp = info.main.temp;
-	let wind = info.wind.speed;
-	let humidity = info.main.humidity;
-	let conditions = info.weather[0].main
-	/*let icon = info.weather[0].icon;*/
+	const name = info.name;
+	const temp = info.main.temp;
+	const wind = info.wind.speed;
+	const humidity = info.main.humidity;
+	const conditions = info.weather[0].main
+	/*const icon = info.weather[0].icon;*/
 
 	// Can use `info.name` or `location` for showing the user's location in the console log statements
 	// Log the information in a pretty format
@@ -60,7 +60,7 @@ function generateQuery(geo) {
 		}
 	}
 
-	let zip = normalizeZipCode(geo.zip);
+	const zip = normalizeZipCode(geo.zip);
 
 	// Fallback to using zipcode from geo
 	if (zipRegex.test(zip)) {
@@ -70,8 +70,8 @@ function generateQuery(geo) {
 
 function normalizeZipCode(zipcode) {
 	let normalized = zipcode.toString();
-	let length = normalized.length;
-	let extraPadding = 5 - length;
+	const length = normalized.length;
+	const extraPadding = 5 - length;
 
 	for (let i = 0; i < extraPadding; i++) {
 		normalized = `0` + zipcode;
