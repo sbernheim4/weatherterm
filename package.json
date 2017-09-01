@@ -1,6 +1,6 @@
 {
   "name": "weatherterm",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "A terminal client to get the weather for your current location",
   "main": "index.js",
   "scripts": {
